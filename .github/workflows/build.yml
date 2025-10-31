@@ -1,0 +1,53 @@
+name: Build and Release
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        
+    - name: Install pnpm
+      run: npm install -g pnpm
+      
+    - name: Install dependencies
+      run: pnpm install
+      env:
+        PUPPETEER_SKIP_DOWNLOAD: 'true'
+        
+    - name: Build application
+      run: pnpm build
+      
+    - name: Package application
+      run: pnpm package:win
+      env:
+        PUPPETEER_SKIP_DOWNLOAD: 'true'
+        
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: message-aggregator-windows
+        path: release/*.exe
+        
+    - name: Create Release
+      if: github.ref == 'refs/heads/main'
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: v1.0.${{ github.run_number }}
+        name: Release v1.0.${{ github.run_number }}
+        files: release/*.exe
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
