@@ -1,0 +1,80 @@
+{
+  "name": "message-aggregator",
+  "version": "1.0.0",
+  "description": "跨平台消息聚合桌面应用 - 统一管理Discord、Telegram、Reddit等群组消息",
+  "main": "dist/main/index.js",
+  "scripts": {
+    "dev": "concurrently \"pnpm dev:vite\" \"pnpm dev:electron\"",
+    "dev:vite": "vite",
+    "dev:electron": "wait-on http://localhost:5173 && cross-env NODE_ENV=development electron .",
+    "build": "pnpm build:renderer && pnpm build:main && pnpm build:preload",
+    "build:renderer": "vite build",
+    "build:main": "tsc src/main/index.ts --outDir dist/main --module commonjs --target es2020 --esModuleInterop --skipLibCheck",
+    "build:preload": "tsc src/preload/index.ts --outDir dist/preload --module commonjs --target es2020 --esModuleInterop --skipLibCheck",
+    "package": "pnpm build && electron-builder",
+    "package:win": "pnpm build && electron-builder --win"
+  },
+  "keywords": [
+    "message-aggregator",
+    "discord",
+    "telegram",
+    "reddit",
+    "electron",
+    "desktop-app",
+    "open-source"
+  ],
+  "author": "Message Aggregator Team",
+  "license": "MIT",
+  "packageManager": "pnpm@10.20.0",
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.16",
+    "@types/node": "^24.9.2",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "@vitejs/plugin-react": "^5.1.0",
+    "concurrently": "^9.2.1",
+    "cross-env": "^10.1.0",
+    "electron": "^39.0.0",
+    "electron-builder": "^26.0.12",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.12",
+    "wait-on": "^9.0.1"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^6.1.0",
+    "antd": "^5.27.6",
+    "autoprefixer": "^10.4.21",
+    "better-sqlite3": "^12.4.1",
+    "dayjs": "^1.11.19",
+    "postcss": "^8.5.6",
+    "puppeteer": "^24.27.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "tailwindcss": "^4.1.16"
+  },
+  "build": {
+    "appId": "com.messageaggregator.app",
+    "productName": "消息聚合器",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "public/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "public/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "消息聚合器"
+    }
+  }
+}

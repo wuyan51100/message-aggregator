@@ -1,0 +1,50 @@
+flowchart TD
+    Start([开始使用消息聚合器]) --> CheckNode{是否已安装<br/>Node.js?}
+    
+    CheckNode -->|否| DownloadNode[访问 nodejs.org<br/>下载LTS版本]
+    DownloadNode --> InstallNode[双击安装包<br/>一路点击Next]
+    InstallNode --> RestartPC[重启电脑]
+    RestartPC --> VerifyNode[打开CMD<br/>输入 node -v 验证]
+    
+    CheckNode -->|是| DownloadProject[下载项目压缩包<br/>message-aggregator-with-scripts.zip]
+    VerifyNode --> DownloadProject
+    
+    DownloadProject --> ExtractProject[解压到简单路径<br/>如 D:\message-aggregator]
+    ExtractProject --> RunInstall[双击运行<br/>一键安装.bat]
+    
+    RunInstall --> Installing[等待3-5分钟<br/>自动安装依赖]
+    Installing --> InstallSuccess{安装<br/>成功?}
+    
+    InstallSuccess -->|否| CheckNetwork{检查网络<br/>连接}
+    CheckNetwork --> TryAgain[更换网络或<br/>稍后重试]
+    TryAgain --> RunInstall
+    
+    InstallSuccess -->|是| Choice{您想做什么?}
+    
+    Choice -->|测试应用| RunDev[双击运行<br/>一键启动.bat]
+    RunDev --> AppWindow[应用窗口打开<br/>体验功能]
+    AppWindow --> CloseApp[关闭窗口<br/>或CMD窗口]
+    CloseApp --> Choice
+    
+    Choice -->|打包分发| RunPackage[双击运行<br/>一键打包.bat]
+    RunPackage --> Packaging[等待5-15分钟<br/>自动构建和打包]
+    Packaging --> PackageSuccess{打包<br/>成功?}
+    
+    PackageSuccess -->|否| CheckDisk{检查磁盘<br/>空间和网络}
+    CheckDisk --> TryPackageAgain[清理后重试]
+    TryPackageAgain --> RunPackage
+    
+    PackageSuccess -->|是| GetExe[在release文件夹<br/>获得.exe安装包]
+    GetExe --> TestExe[双击测试安装]
+    TestExe --> ShareExe[分享给朋友]
+    
+    ShareExe --> End([完成!])
+    CloseApp --> End
+
+    style Start fill:#e1f5e1
+    style End fill:#e1f5e1
+    style InstallSuccess fill:#fff4e6
+    style PackageSuccess fill:#fff4e6
+    style CheckNode fill:#fff4e6
+    style CheckNetwork fill:#ffe6e6
+    style CheckDisk fill:#ffe6e6

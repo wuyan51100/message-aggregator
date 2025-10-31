@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+}
+
+/* 自定义滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* 高亮消息样式 */
+.message-highlight-high {
+  background-color: #fff1f0;
+  border-left: 4px solid #ff4d4f;
+}
+
+.message-highlight-medium {
+  background-color: #fffbe6;
+  border-left: 4px solid #faad14;
+}
+
+.message-highlight-low {
+  background-color: #f6ffed;
+  border-left: 4px solid #52c41a;
+}
+
+/* 平台图标颜色 */
+.platform-discord {
+  color: #5865F2;
+}
+
+.platform-telegram {
+  color: #0088cc;
+}
+
+.platform-reddit {
+  color: #FF4500;
+}
+
+.platform-wechat {
+  color: #07C160;
+}
+
+.platform-qq {
+  color: #12B7F5;
+}
+
+.platform-slack {
+  color: #4A154B;
+}
